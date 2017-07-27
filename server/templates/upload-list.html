@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+    </head>
+    <body>
+        <h1>Uploaded files</h1>
+        {% if files %}
+            <ul>
+            {% for file in files %}
+                <li>{{ file }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <div>There are no files</div>
+        {% endif %}
+    </body>
+</html>

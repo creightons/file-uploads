@@ -46,3 +46,11 @@ def apply_routes(app):
     def uploaded_file(filename):
         dir_path = get_path(app, '')
         return send_from_directory(dir_path, filename)
+
+    @app.route('/upload-list', methods = ['GET'])
+    def upload_list():
+        filelist = os.listdir(get_path(app, ''))
+
+        display_list = [filename for filename in filelist if filename != '.gitignore']
+
+        return render_template('upload-list.html', files = display_list)
