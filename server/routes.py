@@ -44,4 +44,5 @@ def apply_routes(app):
 
     @app.route('/uploads/<filename>', methods = ['GET', 'POST'])
     def uploaded_file(filename):
-        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+        dir_path = get_path(app, '')
+        return send_from_directory(dir_path, filename)
