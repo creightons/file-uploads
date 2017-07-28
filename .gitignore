@@ -2,3 +2,4 @@ venv
 *.pyc
 uploads/*
 !uploads/.gitignore
+mydb.sqlite
