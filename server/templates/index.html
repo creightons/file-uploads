@@ -18,5 +18,25 @@
                 </ul>
             {% endif %}
         {% endwith %}
+
+    <section>
+        <h2>Uploaded Files</h2>
+        {% if context %}
+            <ul>
+            {% for file_record in context %}
+                <li>
+                    <span>Filename:</span>
+                    <span>{{ file_record.filename }}</span>
+                    <br>
+                    <span>Upload Date:</span>
+                    <span>{{ file_record.uploaded }}</span>
+                    <br>
+                    <a href='{{ file_record.link }}'>View</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <div>No files have been uploaded</div>
+        {% endif %}
     </body>
 </html>

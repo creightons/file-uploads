@@ -1,5 +1,7 @@
 import os
 from flask import render_template, request, redirect, flash, url_for, send_from_directory
+from models import File
+from database import db
 from werkzeug.utils import secure_filename
 
 
@@ -34,13 +36,28 @@ def apply_routes(app):
                 filepath = get_path(app, filename)
 
                 file.save(filepath)
+                existing_file = File.query.filter(File.filename == filename).first()
 
-                return redirect(url_for('uploaded_file', filename=filename))
+                if existing_file != None:
+                    flash('File already exists')
+                    return redirect(request.url)
+
+                else:
+                    new_file_record = File(filename)
+                    db.session.add(new_file_record)
+                    db.session.commit()
+
+                    return redirect(url_for('uploaded_file', filename=filename))
             else:
                 flash('failed to upload file')
                 
 
-        return render_template('index.html')
+        file_records = File.query.all()
+
+        context = [{ 'filename': record.filename, 'uploaded': record.uploaded_date, 'link': url_for('uploaded_file', filename=record.filename) }
+                for record in file_records ]
+
+        return render_template('index.html', context=context)
 
     @app.route('/uploads/<filename>', methods = ['GET', 'POST'])
     def uploaded_file(filename):

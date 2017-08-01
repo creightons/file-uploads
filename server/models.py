@@ -1,7 +1,9 @@
 from database import db
 from datetime import datetime
 
-class FileUploads(db.Model):
+class File(db.Model):
+    __tablename__ = 'uploaded_files'
+
     id = db.Column(db.Integer, primary_key = True, nullable = False)
     uploaded_date = db.Column(db.DateTime)
     filename = db.Column(db.String(100))
